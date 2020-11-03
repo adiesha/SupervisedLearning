@@ -50,6 +50,11 @@ def main():
     
     acc = (label_test == predictions).sum()/len(predictions)
     print('Accuracy : ', + acc)
+    
+    df = pd.DataFrame(data_test)
+    df.insert(4, '4', label_test)
+    df.insert(5, '5', predictions)
+    df.to_csv('KNN_test_true_predict.csv', index=False, header=False)
 
 if __name__ == "__main__":
     main()
