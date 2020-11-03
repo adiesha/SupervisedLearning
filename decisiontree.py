@@ -43,10 +43,15 @@ def test():
 
 def test2():
     data = pd.read_csv('data/iris.data', header=None)
+    training = pd.read_csv('data/iris.test.data', header=None)
     print(data)
     listofclusters = data[4].unique()
     node = createdecisionTree(data, 5, 0.9, [0, 1, 2, 3], 4, listofclusters)
     print(node)
+    l = node.predictlabel(training.iloc[0].to_numpy())
+    print(l)
+    node.predict_data_set(training)
+    print(training)
 
 
 def createdecisionTree(data, neta, phi, listofattributes, labelattribute, listofclusters):
