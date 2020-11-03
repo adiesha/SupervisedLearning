@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 from sklearn.utils import shuffle
 from sympy.strategies.core import switch
-
+import decisiontree as dt
+import Performance as perf
 
 def crossValidation(D,K,clssifierMethod):
     N = len(D.index)  # Number of entries
@@ -19,9 +20,24 @@ def crossValidation(D,K,clssifierMethod):
         D_train = D[~D.index.isin(range(int(i*np.floor(N/K)), int((i+1)*np.floor(N/K)-1)))].copy().reset_index(drop=True)
 
         if clssifierMethod == 'Dtree':
-            result =
 
-        print()
+            listofclusters = D_train[4].unique()
+            gTruthCol = 4
+            predCol = 5
+            listofattributes = [0, 1, 2, 3]
+            neta = 5
+            phi = 0.9
+
+            node = dt.createdecisionTree(D_train, neta, phi, listofattributes, gTruthCol, listofclusters)
+            result = node.predict_data_set(D_test)
+            # print(result)
+
+            Theta[i] = perf.F_measure(result, gTruthCol, predCol)
+
+        elif clssifierMethod == 'KNN':
+
+            Theta[i] = perf.F_measure(result, gTruthCol, predCol)
+        print(str(Theta))
 
 def main():
     print("Hello World")

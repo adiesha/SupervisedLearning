@@ -25,6 +25,7 @@ def contingencyTable(result, gTruthCol, predCol):
     tlist = result.iloc[:, gTruthCol].unique()  # Truth label list
     llist = result.iloc[:, predCol].unique()    # Predicted label list
 
+    label_names = result[gTruthCol].unique()
     cT = np.zeros((len(tlist), len(tlist)))
 
     count = result[result.columns[gTruthCol: predCol+1]].value_counts(sort=False)
@@ -32,7 +33,7 @@ def contingencyTable(result, gTruthCol, predCol):
     for i in range(len(count.index)):
         idx = count.index[i]
         # print("Truth = "+str(idx[0])+", Predicted ="+ str(idx[1]))
-        cT[idx[1], idx[0]] = count[count.index[i]]
+        cT[np.where(label_names==idx[1]), np.where(label_names==idx[0])] = count[count.index[i]]
         # print(count.index[i])
         # print(count[count.index[i]])
     print(cT)
