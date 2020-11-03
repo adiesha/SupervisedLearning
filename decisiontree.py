@@ -70,8 +70,8 @@ def decisiontree(node, data, neta, phi, listofattributes, labelattribute, listof
 
     max_purity_class = max(freq_of_classes_dict.items(), key=operator.itemgetter(1))[0]
     purity_D = freq_of_classes_dict[max_purity_class] / n
-    print(max_purity_class)
-    print(purity_D)
+    # print(max_purity_class)
+    # print(purity_D)
 
     if n <= neta or purity_D >= phi:
         c_star = max_purity_class
@@ -95,9 +95,9 @@ def decisiontree(node, data, neta, phi, listofattributes, labelattribute, listof
 
     sliced_dy = sorted_data.iloc[0:ny]
     sliced_dn = sorted_data.iloc[ny:]
-    print("sliced_dy\n", sliced_dy)
-    print("%%%%%%%")
-    print("sliced_dn\n", sliced_dn)
+    # print("sliced_dy\n", sliced_dy)
+    # print("%%%%%%%")
+    # print("sliced_dn\n", sliced_dn)
     nodeleft, noderight = node.createinternalndoesplit(split_attribute, split_point, best_score, ny, nn)
     decisiontree(nodeleft, sliced_dy, neta, phi, listofattributes, labelattribute, listofclusters)
     decisiontree(noderight, sliced_dn, neta, phi, listofattributes, labelattribute, listofclusters)
@@ -108,8 +108,8 @@ def eval_numeric_attr(data, attribute, labelattribute, listofclusters):
     n = data.shape[0]  # number of points
     midpoints = []
     sorted_data = data.sort_values(attribute)
-    print("__+_+_+_+_+_+_+")
-    print(sorted_data)
+    # print("__+_+_+_+_+_+_+")
+    # print(sorted_data)
     # frequency of classes set to zero, kept as a dictionary against the cluster label
     freq_of_classes_dict = dict.fromkeys(listofclusters, 0)
     N_vi = dict()
@@ -129,8 +129,8 @@ def eval_numeric_attr(data, attribute, labelattribute, listofclusters):
 
     freq_of_classes_dict[sorted_data.iloc[n - 1][labelattribute]] += 1
 
-    print(freq_of_classes_dict)
-    print(N_vi)
+    # print(freq_of_classes_dict)
+    # print(N_vi)
 
     # print(sum(list(N_vi.get(5.25).values())))
 
@@ -151,8 +151,8 @@ def eval_numeric_attr(data, attribute, labelattribute, listofclusters):
             p_ci_Dy[i] = N_vi.get(v).get(i) / sigma_N_vj
             p_ci_Dn[i] = (freq_of_classes_dict[i] - N_vi.get(v).get(i)) / sigma_nj_Nvj
 
-        print(p_ci_Dy)
-        print(p_ci_Dn)
+        # print(p_ci_Dy)
+        # print(p_ci_Dn)
         score_x_less_or_eq_v = gain(n, freq_of_classes_dict, p_ci_Dy, p_ci_Dn, sigma_N_vj, sigma_nj_Nvj)
         if score_x_less_or_eq_v > best_score:
             v_best = v
