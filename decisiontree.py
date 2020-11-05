@@ -75,6 +75,25 @@ def satellite_data_test3():
     training.to_csv('data/satellite/sat.ts.result', index=False)
 
 
+def shuttle_data_test4():
+    data = pd.read_csv('data/shuttle/shuttle.trn', header=None)
+    training = pd.read_csv('data/shuttle/shuttle.tst', header=None)
+    y = data[9]
+    y.hist()
+    plt.show()
+
+    # print(data)
+    listofclusters = data[9].unique()
+    listofattributes = np.arange(0, 9)
+    node = createdecisionTree(data, 500, 0.85, listofattributes, 9, listofclusters)
+    print(node)
+    # l = node.predictlabel(training.iloc[0].to_numpy())
+    # print(l)
+    node.predict_data_set(training)
+    # print(training)
+    training.to_csv('data/shuttle/shuttle.tst.rslt', index=False)
+
+
 def createdecisionTree(data, neta, phi, listofattributes, labelattribute, listofclusters):
     # create tree and initialize it to empty
     initialnode = nd.Node()
@@ -218,4 +237,5 @@ def gain(n, freq_of_classes_dict, p_ci_Dy, p_ci_Dn, ny, nn):
 if __name__ == '__main__':
     # test()
     # test2()
-    satellite_data_test3()
+    # satellite_data_test3()
+    shuttle_data_test4()
