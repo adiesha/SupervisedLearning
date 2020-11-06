@@ -4,6 +4,7 @@ from sklearn.utils import shuffle
 from sympy.strategies.core import switch
 import decisiontree as dt
 import Performance as perf
+import knn
 
 def crossValidation(D,K,clssifierMethod):
     N = len(D.index)  # Number of entries
@@ -35,9 +36,34 @@ def crossValidation(D,K,clssifierMethod):
             Theta[i] = perf.F_measure(result, gTruthCol, predCol)
 
         elif clssifierMethod == 'KNN':
+            predictions = []
+            gTruthCol = 4
+            predCol = 5
+            listofattributes = [0, 1, 2, 3]
+
+            k = 3
+            for j in range(len(D_test)):
+                tmp = knn.k_nearest_neighbors(D_train.iloc[:, 0:4].to_numpy(), D_train.iloc[:, gTruthCol].to_numpy(), D_test.iloc[j, 0:4].to_numpy(), k)
+                predictions.append(tmp)
+
+            # acc = (label_test == predictions).sum() / len(predictions)
+            # print('Accuracy : ', + acc)
+
+            result = pd.DataFrame(D_test)
+            # df.insert(4, '4', label_test)
+            result.insert(predCol, 'Results', predictions)
 
             Theta[i] = perf.F_measure(result, gTruthCol, predCol)
-        print(str(Theta))
+    print('Performance measure in each fold')
+    print(str(Theta))
+
+    mu_Theta = np.mean(Theta)
+    var_Theta = np.var(Theta)
+    print('Mean performance measure' + str(mu_Theta))
+    print('Variance performance measure' + str(mu_Theta))
+
+    return mu_Theta, var_Theta
+
 
 def main():
     print("Hello World")
@@ -46,7 +72,8 @@ def main():
     N = len(data.index)  # Number of entries
 
     K = 5       # number of folds in K-fold
-    clssifierMethod = 'Dtree'
+    clssifierMethod = 'KNN'
+
 
     crossValidation(data.copy(), K, clssifierMethod)
 
