@@ -88,14 +88,15 @@ def F_measure(result, gTruthCol, predCol, listofclusters):
 
 
 def main():
-    result = pd.read_csv("sysnthetic.data.result.k_means.csv")
+    result = pd.read_csv("data/satellite/sat.ts.result")
     # print(result.describe())
-    gTruthCol = 2   # Column index of the ground truth
-    predCol = 3     # Column index of the prediction
+    gTruthCol = 36   # Column index of the ground truth
+    predCol = 37     # Column index of the prediction
 
     listofclusters = result.iloc[:, gTruthCol].unique()
     listofclusters.sort()
-
+    print('Labels ')
+    print(listofclusters)
     # errR = errorRate(result, gTruthCol, predCol)
     # acc = accuracy(result, gTruthCol, predCol)
 
