@@ -48,6 +48,7 @@ def test2():
     training = pd.read_csv('data/iris.test.data', header=None)
     print(data)
     listofclusters = data[4].unique()
+    # check neta 19, 8, 6, 5, 4
     node = createdecisionTree(data, 5, 0.9, [0, 1, 2, 3], 4, listofclusters)
     print(node)
     l = node.predictlabel(training.iloc[0].to_numpy())
@@ -66,6 +67,7 @@ def satellite_data_test3():
     # print(data)
     listofclusters = data[36].unique()
     listofattributes = np.arange(0, 36)
+    #check neta 300, 200, 100
     node = createdecisionTree(data, 200, 0.8, listofattributes, 36, listofclusters)
     print(node)
     # l = node.predictlabel(training.iloc[0].to_numpy())
@@ -85,6 +87,7 @@ def shuttle_data_test4():
     # print(data)
     listofclusters = data[9].unique()
     listofattributes = np.arange(0, 9)
+    # check neta 600, 500, 400
     node = createdecisionTree(data, 500, 0.85, listofattributes, 9, listofclusters)
     print(node)
     # l = node.predictlabel(training.iloc[0].to_numpy())
