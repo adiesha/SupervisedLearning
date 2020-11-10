@@ -27,14 +27,6 @@ def crossValidation(D, K, classifier):
 
         if classifier.name == 'Dtree':
 
-
-            # gTruthCol = 4
-            # predCol = 5
-            #
-            # listofattributes = [0, 1, 2, 3]
-            # neta = 5
-            # phi = 0.9
-
             node = dt.createdecisionTree(D_train, classifier.neta, classifier.phi, classifier.listofattributes, classifier.gTruthCol, listofclusters)
             result = node.predict_data_set(D_test)
             # print(result)
@@ -45,20 +37,12 @@ def crossValidation(D, K, classifier):
 
         elif classifier.name == 'KNN':
             predictions = []
-            # gTruthCol = 4
-            # predCol = 5
-            # listofattributes = [0, 1, 2, 3]
 
-            # k = 3
             for j in range(len(D_test)):
                 tmp = knn.k_nearest_neighbors(D_train.iloc[:, 0:4].to_numpy(), D_train.iloc[:, classifier.gTruthCol].to_numpy(), D_test.iloc[j, 0:4].to_numpy(), classifier.k)
                 predictions.append(tmp)
 
-            # acc = (label_test == predictions).sum() / len(predictions)
-            # print('Accuracy : ', + acc)
-
             result = pd.DataFrame(D_test)
-            # df.insert(4, '4', label_test)
             result.insert(classifier.predCol, 'Results', predictions)
 
             Theta[i] = perf.F_measure(result, classifier.gTruthCol, classifier.predCol, listofclusters)
@@ -104,11 +88,12 @@ class ModelMethod:
         self.listofattributes = listofattributes
 
 def main():
-    print("Hello World")
+    print("K-Fold cross validation")
 
-    dataName = 'shuttle'
+    dataName = 'iris'
     print('Data = ' + dataName)
 
+    # Can include other datasets and their parameters in the elif structure
     if dataName == 'shuttle':
         data = pd.read_csv('data/shuttle/shuttle.trn', header=None)
         gTruthCol = 9
@@ -140,16 +125,17 @@ def main():
 
     N = len(data.index)  # Number of entries
 
-    name = 'KNN' # 'Dtree' or 'KNN'
+    # 'Dtree' or 'KNN' for Decition tree and K nearest neighbour
+    name = 'KNN'
 
 
     Model = ModelMethod( name, gTruthCol, predCol,  phi, neta, k, listofattributes)
     print('Classification method = ' + Model.name)
     print(Model)
 
-    K = 5  # number of folds in K-fold
+    K = 3  # number of folds in K-fold
 
-    [mu, theta] = crossValidation(data.copy(), K, Model)
+    [theta_u, theta_var] = crossValidation(data.copy(), K, Model)
 
 if __name__ == "__main__":
     main()

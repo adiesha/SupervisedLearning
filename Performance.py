@@ -58,7 +58,7 @@ def recall(result, gTruthCol, predCol, listofclusters):
     cT = contingencyTable(result, gTruthCol, predCol, listofclusters)
 
     with np.errstate(divide='ignore', invalid='ignore'):
-        recall_i = cT.diagonal() / cT.sum(axis=0)  # Maybe 0/0 check
+        recall_i = cT.diagonal() / cT.sum(axis=0)
     recall_i[np.isnan(recall_i)] = 0
     print("Class-specific recall")
     print(recall_i)
@@ -98,10 +98,10 @@ def main():
     print('Labels ')
     print(listofclusters)
     # errR = errorRate(result, gTruthCol, predCol)
-    # acc = accuracy(result, gTruthCol, predCol)
+    acc = accuracy(result, gTruthCol, predCol)
 
-    # prec_i  = precision(result, gTruthCol, predCol, listofclusters)
-    # rec_i = recall(result, gTruthCol, predCol, listofclusters)
+    prec_i  = precision(result, gTruthCol, predCol, listofclusters)
+    rec_i = recall(result, gTruthCol, predCol, listofclusters)
 
     F_i = F_measure(result, gTruthCol, predCol, listofclusters)
 

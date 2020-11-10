@@ -4,12 +4,13 @@ import math as math
 import node as nd
 import operator
 import matplotlib.pyplot as plt
+import Performance as perf
 import time
 
 
 def main():
     print("decision tree")
-    pass
+    test2()
 
 
 def test():
@@ -55,6 +56,15 @@ def test2():
     print(l)
     node.predict_data_set(training)
     print(training)
+
+    # acc = perf.accuracy(training, 4, 5)
+    # print(acc)
+    prec_i = perf.precision(training, 4, 5, listofclusters)
+    print(prec_i)
+    rec_i = perf.recall(training, 4, 5, listofclusters)
+    print(rec_i)
+    F_i = perf.F_measure(training, 4, 5, listofclusters)
+    print(F_i)
 
 
 def satellite_data_test3():
@@ -241,4 +251,5 @@ if __name__ == '__main__':
     # test()
     # test2()
     # satellite_data_test3()
-    shuttle_data_test4()
+    main()
+    # shuttle_data_test4()
